@@ -15,7 +15,6 @@ TMRpcm audio;
 int file_number = 0;
 char filePrefixname[50] = "audio";
 char exten[10] = ".wav";
-const int recordLed = 2;
 const int mic_pin = A0;
 int sample_rate = 5000; // Sample rate från början
 
@@ -31,7 +30,6 @@ char currentFileName[50] = ""; // Sparar nuvarande filnamn
 void setup() {
   Serial.begin(9600);
   pinMode(mic_pin, INPUT);
-  pinMode(recordLed, OUTPUT);
   pinMode(recordButton, INPUT_PULLUP);
   pinMode(sampleRateUpButton, INPUT_PULLUP);
   pinMode(sampleRateDownButton, INPUT_PULLUP);
@@ -91,7 +89,6 @@ void startRecording() {
   strcpy(currentFileName, file_name); // Sparar nuvarande filnamn
   Serial.print("New File Name: ");
   Serial.println(currentFileName);
-  digitalWrite(recordLed, HIGH);
   audio.startRecording(currentFileName, sample_rate, mic_pin);
   Serial.println("startRecording ");
 }
@@ -101,7 +98,6 @@ void startRecording() {
  Funktion för att stanna nuvarande inspelning
  */
 void stopRecording() {
-  digitalWrite(recordLed, LOW);
   audio.stopRecording(currentFileName); // Stannar nuvarande inspelning
   Serial.println("stopRecording");
 }
